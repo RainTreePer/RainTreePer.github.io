@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://raintreeper.github.io</id>
+    <title>Gridea</title>
+    <updated>2020-09-25T09:01:08.606Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://raintreeper.github.io"/>
+    <link rel="self" href="https://raintreeper.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://raintreeper.github.io/images/avatar.png</logo>
+    <icon>https://raintreeper.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[单例模式]]></title>
+        <id>https://raintreeper.github.io/post/dan-li-mo-shi/</id>
+        <link href="https://raintreeper.github.io/post/dan-li-mo-shi/">
+        </link>
+        <updated>2020-09-25T08:27:30.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="单例模式">单例模式</h4>
+<h5 id="简介">简介</h5>
+<ul>
+<li><mark>创建型设计模式</mark>，提供一种创建对象的方式。通过该模式设计的类可确保运行时仅存在一个实例。</li>
+</ul>
+<h5 id="实现原则">实现原则</h5>
+<ul>
+<li>单例类仅有一个实例。</li>
+<li>单例类的实例必须由自己创建。</li>
+<li>单例类必须提供对外访问唯一实例的方法。</li>
+</ul>
+<h5 id="实现方式">实现方式</h5>
+<ol>
+<li>
+<p><mark>饿汉式</mark></p>
+<pre><code class="language-java">特点：
+*. 提前创建单例对象
+*. 提供一个静态的、在类加载时创建的实例
+*. 构造方法私有化，提供一个获取单例的静态方法
+
+示例：
+public class Singleton {
+    private static Singleton instance = new Singleton;
+    
+    private Singleton() {}
+    
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><mark>懒汉式（双重检查锁）</mark></p>
+<pre><code class="language-java">特点：
+*. 在获取单例对象的方法首次调用时创建单例对象
+*. 线程不安全，需加锁
+
+示例：
+public class Singleton {
+    // volatile 避免重排序
+    private volatile static Singleton instance;
+    
+    private Singleton() {}
+	
+    // 双重检查锁
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized(Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }        
+        return instance;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><mark>懒汉式（静态内部类）</mark></p>
+<pre><code class="language-java">特点：
+*. 在内部内中定义对象实例，通过单例类的静态方法访问
+
+示例：
+public class Singleton {  
+    private static class SingletonHolder {  
+        private static final Singleton INSTANCE = new Singleton();  
+    }  
+    
+    private Singleton (){}  
+    
+    public static final Singleton getInstance() {  
+        return SingletonHolder.INSTANCE;  
+    }  
+}
+</code></pre>
+</li>
+<li>
+<p><mark>饿汉式（枚举）</mark></p>
+<pre><code class="language-java">特点：
+*. 更简洁，自动支持序列化机制，绝对防止多次实例化
+
+示例：
+public enum Singleton {
+    INSTANCE;
+}
+</code></pre>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <id>https://raintreeper.github.io/post/hello-gridea/</id>
+        <link href="https://raintreeper.github.io/post/hello-gridea/">
+        </link>
+        <updated>2018-12-11T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="https://gridea.dev/">Gridea 主页</a><br>
+<a href="http://fehey.com/">示例网站</a></p>
+<h2 id="特性">特性👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>

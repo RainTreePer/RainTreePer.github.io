@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>单例模式 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://raintreeper.github.io/favicon.ico?v=1601024464567">
+<link rel="stylesheet" href="https://raintreeper.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="单例模式
+简介
+
+创建型设计模式，提供一种创建对象的方式。通过该模式设计的类可确保运行时仅存在一个实例。
+
+实现原则
+
+单例类仅有一个实例。
+单例类的实例必须由自己创建。
+单例类必须提供对外访问唯一实例的方法。
+
+实现方式
+
+
+饿汉式
+特点..." />
+    <meta name="keywords" content="设计模式" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://raintreeper.github.io">
+        <img src="https://raintreeper.github.io/images/avatar.png?v=1601024464567" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://raintreeper.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">单例模式</h2>
+            <div class="post-date">2020-09-25</div>
+            
+            <div class="post-content" v-pre>
+              <h4 id="单例模式">单例模式</h4>
+<h5 id="简介">简介</h5>
+<ul>
+<li><mark>创建型设计模式</mark>，提供一种创建对象的方式。通过该模式设计的类可确保运行时仅存在一个实例。</li>
+</ul>
+<h5 id="实现原则">实现原则</h5>
+<ul>
+<li>单例类仅有一个实例。</li>
+<li>单例类的实例必须由自己创建。</li>
+<li>单例类必须提供对外访问唯一实例的方法。</li>
+</ul>
+<h5 id="实现方式">实现方式</h5>
+<ol>
+<li>
+<p><mark>饿汉式</mark></p>
+<pre><code class="language-java">特点：
+*. 提前创建单例对象
+*. 提供一个静态的、在类加载时创建的实例
+*. 构造方法私有化，提供一个获取单例的静态方法
+
+示例：
+public class Singleton {
+    private static Singleton instance = new Singleton;
+    
+    private Singleton() {}
+    
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><mark>懒汉式（双重检查锁）</mark></p>
+<pre><code class="language-java">特点：
+*. 在获取单例对象的方法首次调用时创建单例对象
+*. 线程不安全，需加锁
+
+示例：
+public class Singleton {
+    // volatile 避免重排序
+    private volatile static Singleton instance;
+    
+    private Singleton() {}
+	
+    // 双重检查锁
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized(Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }        
+        return instance;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><mark>懒汉式（静态内部类）</mark></p>
+<pre><code class="language-java">特点：
+*. 在内部内中定义对象实例，通过单例类的静态方法访问
+
+示例：
+public class Singleton {  
+    private static class SingletonHolder {  
+        private static final Singleton INSTANCE = new Singleton();  
+    }  
+    
+    private Singleton (){}  
+    
+    public static final Singleton getInstance() {  
+        return SingletonHolder.INSTANCE;  
+    }  
+}
+</code></pre>
+</li>
+<li>
+<p><mark>饿汉式（枚举）</mark></p>
+<pre><code class="language-java">特点：
+*. 更简洁，自动支持序列化机制，绝对防止多次实例化
+
+示例：
+public enum Singleton {
+    INSTANCE;
+}
+</code></pre>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://raintreeper.github.io/tag/HvOuchH6V/" class="tag">
+                    设计模式
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://raintreeper.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
